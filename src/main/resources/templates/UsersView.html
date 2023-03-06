@@ -33,7 +33,7 @@
                             </form>
                         </td>
                         <td>
-                            <form action="delete" method="post" >
+                            <form th:method="DELETE" th:action="@{delete}" th:object="${user}">
                                 <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}" />
                                 <button name="Id" th:value="${user.getId()}">Удалить</button>
                             </form>

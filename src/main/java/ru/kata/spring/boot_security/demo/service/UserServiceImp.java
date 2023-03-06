@@ -64,11 +64,9 @@ public class UserServiceImp implements UserService {
         userRepository.save(user);
     }
 
-
     public List<Role> findAll() {
         return roleRepository.findAll();
     }
-
 
     @Transactional
     @Override

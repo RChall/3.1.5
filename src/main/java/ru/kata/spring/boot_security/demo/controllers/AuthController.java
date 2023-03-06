@@ -17,9 +17,7 @@ import java.util.List;
 @Controller
 @RequestMapping("/auth")
 public class AuthController {
-
     private final UserValidator userValidator;
-    @Autowired
     private final UserService userService;
     @Autowired
     private RoleRepository roleRepository;
@@ -50,8 +48,7 @@ public class AuthController {
 
         userValidator.validate(user, bindingResult);
 
-        if (bindingResult.hasErrors())
-            return "/registration";
+        if (bindingResult.hasErrors()) return "/registration";
 
         userService.addUser(user);
         return "redirect:/login";

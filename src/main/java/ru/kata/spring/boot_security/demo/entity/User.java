@@ -39,22 +39,6 @@ public class User implements UserDetails {
     public User() {
     }
 
-    @Override
-    public String toString() {
-        return id + ") " + name + " " + lastName + ", " + country + ", " + age;
-    }
-
-
-
-
-
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
-    }
 
     public User(List<Role> roles, String username, String password, String name, String lastName, String country, Integer age) {
         this.roles = roles;
@@ -77,6 +61,14 @@ public class User implements UserDetails {
         this.enabled = enabled;
     }
 
+
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
 
     public Boolean getEnabled() {
         return enabled;
@@ -130,24 +122,9 @@ public class User implements UserDetails {
         PasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
         this.password = passwordEncoder.encode(password);
     }
-//public void setPassword(String password) {
-//        this.password = password;
-//    }
 
     public void setRoles(List<Role> roles) {
         this.roles = roles;
-    }
-
-    /* ██████╗░███████╗████████╗░█████╗░██╗██╗░░░░░░██████╗
-       ██╔══██╗██╔════╝╚══██╔══╝██╔══██╗██║██║░░░░░██╔════╝
-       ██║░░██║█████╗░░░░░██║░░░███████║██║██║░░░░░╚█████╗░
-       ██║░░██║██╔══╝░░░░░██║░░░██╔══██║██║██║░░░░░░╚═══██╗
-       ██████╔╝███████╗░░░██║░░░██║░░██║██║███████╗██████╔╝
-       ╚═════╝░╚══════╝░░░╚═╝░░░╚═╝░░╚═╝╚═╝╚══════╝╚═════╝░*/
-    @Override
-    public Collection<? extends GrantedAuthority> getAuthorities() {
-
-        return Collections.singletonList(new SimpleGrantedAuthority(roles.toString()));
     }
 
     @Override
@@ -159,6 +136,20 @@ public class User implements UserDetails {
     public String getUsername() {
         return username;
     }
+
+
+    @Override
+    public String toString() {
+        return id + ") " + name + " " + lastName + ", " + country + ", " + age;
+    }
+
+
+    @Override
+    public Collection<? extends GrantedAuthority> getAuthorities() {
+
+        return Collections.singletonList(new SimpleGrantedAuthority(roles.toString()));
+    }
+
 
     //не просрочен
     @Override

@@ -1,7 +1,6 @@
 package ru.kata.spring.boot_security.demo.controllers;
 
 
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -20,47 +19,22 @@ import java.util.List;
 @RequestMapping("admin")
 public class AdminController {
 
-    @Autowired
+
     private final UserService userService;
 
-
-
+    @Autowired
     public AdminController(UserService userService) {
         this.userService = userService;
     }
 
-//    @GetMapping("/users/new")
-//    public ModelAndView newUser() {
-//        User user = new User();
-//        ModelAndView mav = new ModelAndView("user_form");
-//        mav.addObject("user", user);
-//
-//        List<Role> roles = (List<Role>) roleRepository.findAll();
-//
-//        mav.addObject("allRoles", roles);
-//
-//        return mav;
-//    }
-//
-//    @GetMapping("/users/edit/{id}")
-//    public ModelAndView editUser(@PathVariable(name = "id") Integer id) {
-//        User user = userService.getUserById(id);
-//        ModelAndView mav = new ModelAndView("user_form");
-//        mav.addObject("user", user);
-//
-//        List<Role> roles = (List<Role>) roleRepository.findAll();
-//
-//        mav.addObject("allRoles", roles);
-//
-//        return mav;
-//    }
+
     @GetMapping("users")
     public String showAllUsers(ModelMap model) {
-        if(userService.getAllUsers().isEmpty()) {
+        if (userService.getAllUsers().isEmpty()) {
             return "zeroPage";
         } else {
             List<User> users = new ArrayList<>();
-            for(User user: userService.getAllUsers()) {
+            for (User user : userService.getAllUsers()) {
                 users.add(user);
             }
             model.addAttribute("users", users);
@@ -82,7 +56,7 @@ public class AdminController {
         return "redirect:users";
     }
 
-    @PostMapping("delete")
+    @DeleteMapping("delete")
     public String deleteUser(@RequestParam("Id") Long id) {
         userService.deleteUserById(id);
         return "redirect:users";
@@ -91,21 +65,22 @@ public class AdminController {
     @PostMapping("update")
     public String updateUser(@RequestParam("user") Long Id, ModelMap model) {
 
-        model.addAttribute("user", userService.getUserById( Id));
+        model.addAttribute("user", userService.getUserById(Id));
         List<Role> roles = userService.findAll();
         model.addAttribute("allRoles", roles);
 
         return "updateUser";
     }
 
-    @PostMapping("updating")
+    @PatchMapping("updating")
     public String updatingUser(@ModelAttribute("user") User user) {
         userService.updateUser(user);
         return "redirect:users";
     }
+
     @GetMapping("")
-    public String showAdminPage(Model model, Principal principal){
-        model.addAttribute("user",userService.findByUsername(principal.getName()));
+    public String showAdminPage(Model model, Principal principal) {
+        model.addAttribute("user", userService.findByUsername(principal.getName()));
         return "admin";
 
     }
