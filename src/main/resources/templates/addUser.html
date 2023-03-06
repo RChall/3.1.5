@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/html">
+<head>
+    <meta charset="UTF-8">
+    <title>Добавление пользователя</title>
+    <form th:action="@{/logout}" th:method="POST">
+        <input type="submit" value="Выйти из аккаунта"/>
+    </form>
+
+</head>
+<body>
+<h1>Добавить пользователя</h1>
+<h4>Заполните данные</h4>
+<form th:method="POST" th:action="save" th:object="${user}">
+    <label for="username">Логин</label>
+    <input id="username" placeholder="username" type="text" th:field="*{username}"><br>
+    <div style="color: red" th:if="${#fields.hasErrors('username')}" th:errors="*{username}">
+        Неверное имя пользователя
+    </div>
+    <label for="password">Пароль</label>
+    <input id="password" placeholder="password" type="password" th:field="*{password}"><br>
+    <label for="name">Имя</label>
+    <input id="name" placeholder="name" type="text" th:field="*{name}"><br>
+
+    <label for="lastname">Фамилия</label>
+    <input id="lastname" placeholder="lastname" type="text" th:field="*{lastName}" required><br>
+    <label for="country">Страна</label>
+    <input id="country" placeholder="country" type="text" th:field="*{country}" required><br>
+    <label for="age">Возраст</label>
+    <input id="age" name="age" placeholder="age"  type="number" th:field="*{age}" required><br>
+
+    <label for="enabled">Активный аккаунт</label>
+    <input id="enabled" name="age" placeholder="enabled"  type="checkbox" th:field="*{enabled}"  th:value="${user.enabled}"><br>
+
+    <p>
+        <label>Роли:
+            <input type="checkbox" name="roles"
+                   th:each="role : ${allRoles}"
+                   th:text="${role.roleNaming}"
+                   th:value="${role.id}"
+                   th:field="*{roles}"
+            />
+        </label>
+    </p>
+    <input type="submit" value="Добавить"/>
+</form>
+</body>
+</html>

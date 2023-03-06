@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Регистрация</title>
+</head>
+<body>
+<h1>Регистрация</h1>
+<h4>Пожалуйста, введите свои данные</h4>
+<form th:method="POST" th:action="@{/auth/registration}" th:object="${user}">
+  <label for="username">Логин</label>
+  <input id="username" placeholder="логин" type="text" th:field="*{username}" required><br>
+  <div style="color: red" th:if="${#fields.hasErrors('username')}" th:errors="*{username}">
+    Неверное имя пользователя
+  </div>
+  <label for="password">Пароль</label>
+  <input id="password" placeholder="пароль" type="password" th:field="*{password}" required><br>
+
+  <label for="name">Имя</label>
+  <input id="name" placeholder="ваше имя" type="text" th:field="*{name}" required><br>
+
+  <label for="lastname">Фамилия</label>
+  <input id="lastname" placeholder="ваша фамилия" type="text" th:field="*{lastName}" required><br>
+
+  <label for="country">Страна</label>
+  <input id="country" placeholder="страна проживания" type="text" th:field="*{country}" required><br>
+
+  <label for="age">Возраст</label>
+  <input id="age" name="age" placeholder="ваш возраст"  type="number" th:field="*{age}" required><br>
+
+  <label for="enabled">Активность</label>
+  <input id="enabled" name="age" placeholder="enabled"  type="checkbox" th:field="*{enabled}"  th:value="${user.enabled}"><br>
+
+
+
+
+
+  <p>
+    <label>Права:
+      <input type="checkbox" name="roles"
+             th:each="role : ${allRoles}"
+             th:text="${role.roleNaming}"
+             th:value="${role.id}"
+             th:field="*{roles}"
+      />
+    </label>
+  </p>
+  <input type="submit" value="Зарегистрироваться"/>
+</form>
+</body>
+</html>

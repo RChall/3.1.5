@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Пользователи</title>
+    <form th:action="@{/logout}" th:method="POST">
+        <input type="submit" value="Выйти из аккаунта"/>
+    </form>
+</head>
+    <body>
+        <h1>Пользователи</h1>
+            <table border="2">
+                <tr>
+                    <th>Логин</th>
+<!--                    <th>Пароль</th>-->
+                    <th>Имя</th><th>Фамилия</th><th>Страна</th><th>Возраст</th><th>Роли</th><th>Активность</th><th  colspan="2">Функции</th>
+                </tr>
+                <th:block th:each="user:${users}">
+                    <tr>
+                        <td th:text="${user.getUsername()}"></td>
+<!--                        <td th:text="${user.getPassword()}"></td>-->
+                        <td th:text="${user.getName()}"></td>
+                        <td th:text="${user.getLastName()}"></td>
+                        <td th:text="${user.getCountry()}"></td>
+                        <td th:text="${user.getAge()}"></td>
+                        <td th:text="${user.getRoles()}"></td>
+                        <td th:text="${user.getEnabled()}"></td>
+                        <td>
+                            <form action="update" method="post" >
+                                <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}" />
+                                <button name="user" th:value="${user.getId()}">Изменить</button>
+                            </form>
+                        </td>
+                        <td>
+                            <form action="delete" method="post" >
+                                <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}" />
+                                <button name="Id" th:value="${user.getId()}">Удалить</button>
+                            </form>
+                        </td>
+                    </tr>
+                </th:block>
+            </table>
+
+        <a href="add"><button>Добавить нового</button></a>
+    </body>
+</html>
