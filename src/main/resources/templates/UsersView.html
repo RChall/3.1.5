@@ -107,10 +107,15 @@
                                                         <form action="update" method="post">
                                                             <input type="hidden" th:name="${_csrf.parameterName}"
                                                                    th:value="${_csrf.token}"/>
-                                                            <button name="user" class="btn btn-info"
+                                                            <button name="editeduser" class="btn btn-info"
                                                                     th:value="${user.getId()}">Изменить
                                                             </button>
                                                         </form>
+                                                        <div class="modal">
+                                                            <div class="modal-window">
+                                                                <h1>Modalka</h1>
+                                                            </div>
+                                                        </div>
                                                     </td>
                                                     <td>
                                                         <form th:method="DELETE" th:action="@{delete}"

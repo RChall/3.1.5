@@ -32,7 +32,8 @@
         <nav class="col-md-2 d-none d-md-block bg-light sidebar">
             <div class="sidebar-sticky">
 
-                <div class="nav flex-column nav-pills me-3" id="v-pills-tab" role="tablist" aria-orientation="vertical">
+                <div class="nav flex-column nav-pills сol-lg-12" id="v-pills-tab" role="tablist"
+                     aria-orientation="vertical">
                     <h1></h1>
                     <li class="nav-item">
                         <a class="nav-link" id="v-pills-home-tab" data-bs-toggle="pill" href="/admin"
@@ -81,7 +82,7 @@
                                     <div style="text-align: center;" class="col-3">
 
 
-                                        <form th:method="POST" th:action="save" th:object="${user}">
+                                        <form th:method="POST" th:action="save" th:object="${newuser}">
 
 
                                             <br><h6><strong>Логин</strong></h6>
@@ -111,24 +112,29 @@
                                                    th:field="*{age}" required><br>
 
                                             <input type="hidden" id="enabled" name="enabled" placeholder="enabled"
-                                                   th:field="*{enabled}" th:value="${user.setEnabled(true)}"><br>
-                                            <label for="add5">Role</label>
-                                            <select multiple class="form-control" size="2" name="roles"
-                                                    id="add5">
-                                                <option value="ADMIN">ADMIN</option>
-                                                <option value="USER">USER</option>
-                                            </select>
-                                            <p>
-                                                <label>Роли:
+                                                   th:field="*{enabled}" th:value="${newuser.setEnabled(true)}"><br>
 
-                                                    <input type="checkbox" name="roles"
-                                                           th:each="role : ${allRoles}"
-                                                           th:text="${role.roleNaming}"
-                                                           th:value="${role.id}"
-                                                           th:field="*{roles}"
-                                                    />
-                                                </label>
-                                            </p>
+
+                                            <label style="font-weight: bold" class="control-label
+                                             form-group; col-sm-12" for="roleSelect">Роли</label>
+                                            <select multiple name="roles" class="form-select; col-sm-6" size="2">
+                                                <option th:each="role:${allRoles}" th:value="${role.id}"
+                                                        th:text="${role.roleNaming}" id="roleSelect" readonly/>
+                                            </select><br>
+
+
+
+                                            <!--                                            <p>-->
+                                            <!--                                                <label>Роли:-->
+
+                                            <!--                                                    <input type="checkbox" name="roles"-->
+                                            <!--                                                           th:each="role : ${allRoles}"-->
+                                            <!--                                                           th:text="${role.roleNaming}"-->
+                                            <!--                                                           th:value="${role.id}"-->
+                                            <!--                                                           th:field="*{roles}"-->
+                                            <!--                                                    />-->
+                                            <!--                                                </label>-->
+                                            <!--                                            </p>-->
                                             <input type="submit" class="btn btn-success" value="Добавить"/>
                                         </form>
 

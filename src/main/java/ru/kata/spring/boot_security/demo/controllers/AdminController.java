@@ -46,16 +46,16 @@ public class AdminController {
     @GetMapping("add")
     public String addUser(ModelMap modelMap, Principal principal) {
         modelMap.addAttribute("masteruser", userService.findByUsername(principal.getName()));
-        modelMap.addAttribute("user", new User());
+        modelMap.addAttribute("newuser", new User());
         List<Role> roles = userService.findAll();
         modelMap.addAttribute("allRoles", roles);
         return "addUser";
     }
 
     @PostMapping("save")
-    public String saveNewUser(@ModelAttribute("user") User user) {
+    public String saveNewUser(@ModelAttribute("newuser") User user) {
         userService.addUser(user);
-        return "redirect:users";
+        return "redirect:";
     }
 
     @DeleteMapping("delete")
@@ -65,9 +65,9 @@ public class AdminController {
     }
 
     @PostMapping("update")
-    public String updateUser(@RequestParam("user") Long Id, ModelMap model) {
+    public String updateUser(@RequestParam("editeduser") Long Id, ModelMap model) {
 
-        model.addAttribute("user", userService.getUserById(Id));
+        model.addAttribute("editeduser", userService.getUserById(Id));
         List<Role> roles = userService.findAll();
         model.addAttribute("allRoles", roles);
 
@@ -81,9 +81,22 @@ public class AdminController {
     }
 
     @GetMapping("")
-    public String showAdminPage(Model model, Principal principal) {
+    public String showAdminPage(ModelMap model, Principal principal) {
         model.addAttribute("user", userService.findByUsername(principal.getName()));
-        return "admin";
+        model.addAttribute("newuser", new User());
+        List<Role> roles = userService.findAll();
+        model.addAttribute("allRoles", roles);
+
+        if (userService.getAllUsers().isEmpty()) {
+            return "zeroPage";
+        } else {
+            List<User> users = new ArrayList<>();
+            for (User user : userService.getAllUsers()) {
+                users.add(user);
+            }
+            model.addAttribute("users", users);
+            return "admin";
+        }
 
     }
 

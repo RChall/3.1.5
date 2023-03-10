@@ -11,13 +11,13 @@
 <body>
 <h1>Изменение данных пользователя</h1>
 <h4>Заполните новые данные</h4>
-<form th:method="PATCH" th:action="@{updating}" th:object="${user}">
+<form th:method="PATCH" th:action="@{updating}" th:object="${editeduser}">
 
     <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}" />
 
 
     <label for="id">Уникальный номер: </label>
-    <input id = "id" name="Id" th:value="${user.getId()}" readonly>
+    <input id = "id" name="Id" th:value="${editeduser.getId()}" readonly>
     <br>
     <label for="username">Новый логин</label>
     <input id = "username" th:field="*{username}" name="username" placeholder="username" type="text" required>
@@ -38,7 +38,7 @@
     <input id = "age" th:field="*{age}" name="age" placeholder="age" type="number" required>
     <br>
     <label for="enabled">Enabled</label>
-    <input id="enabled" name="age" placeholder="enabled"  type="checkbox" th:field="*{enabled}"  th:value="${user.enabled}"><br>
+    <input id="enabled" name="age" placeholder="enabled"  type="checkbox" th:field="*{enabled}"  th:value="${editeduser.enabled}"><br>
     <br>
     <p>
         <label>Роли:
