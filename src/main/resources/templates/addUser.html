@@ -1,48 +1,224 @@
 <!DOCTYPE html>
-<html lang="en" xmlns="http://www.w3.org/1999/html">
+<html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <title>Добавление пользователя</title>
-    <form th:action="@{/logout}" th:method="POST">
-        <input type="submit" value="Выйти из аккаунта"/>
-    </form>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+          integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <title>Администратор</title>
+    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta/css/bootstrap.min.css" rel="stylesheet"
+          integrity="sha384-/Y6pD6FV/Vv2HJnA6t+vslU6fwYXjCFtcEpHbNJ0lyAFsXTsjBbfaDjzALeQsN6M" crossorigin="anonymous">
+    <link href="https://getbootstrap.com/docs/4.0/examples/signin/signin.css" rel="stylesheet" crossorigin="anonymous">
+
 
 </head>
 <body>
-<h1>Добавить пользователя</h1>
-<h4>Заполните данные</h4>
-<form th:method="POST" th:action="save" th:object="${user}">
-    <label for="username">Логин</label>
-    <input id="username" placeholder="username" type="text" th:field="*{username}"><br>
-    <div style="color: red" th:if="${#fields.hasErrors('username')}" th:errors="*{username}">
-        Неверное имя пользователя
+<nav class="navbar navbar-dark fixed-top bg-dark flex-md-nowrap p-0 shadow">
+    <a class="navbar-brand col-sm-3 col-md-2 mr-0" href="#">
+        <td th:text="${masteruser.getUsername()}"></td>
+        , роли:
+        <td th:text="${masteruser.getRoles()}"></td>
+    </a>
+
+    <ul class="navbar-nav px-3">
+        <li class="nav-item text-nowrap">
+            <a class="nav-link" href="/logout">Выход</a>
+        </li>
+    </ul>
+</nav>
+<div class="container-fluid">
+    <div class="row">
+
+        <nav class="col-md-2 d-none d-md-block bg-light sidebar">
+            <div class="sidebar-sticky">
+
+                <div class="nav flex-column nav-pills me-3" id="v-pills-tab" role="tablist" aria-orientation="vertical">
+                    <h1></h1>
+                    <li class="nav-item">
+                        <a class="nav-link" id="v-pills-home-tab" data-bs-toggle="pill" href="/admin"
+                           role="tab" aria-controls="v-pills-home" aria-selected="true">User</a>
+
+                        </a>
+
+                        <a class="nav-link active" id="v-pills-profile-tab" data-bs-toggle="pill"
+                           href="#v-pills-profile"
+                           role="tab" aria-controls="v-pills-profile" aria-selected="false">Admin</a>
+
+                        </a>
+                    </li>
+
+                </div>
+
+            </div>
+        </nav>
+        <div role="main" class="col-md-12 ml-sm-auto col-lg-10 px-4">
+            <h1></h1>
+            <h2 class="h2">Информация о пользователях</h2>
+            <h1></h1>
+
+            <div class="tab-content" id="v-pills-tabContent">
+                <div class="tab-pane fade show active" id="v-pills-home"
+                     role="tabpanel" aria-labelledby="v-pills-home-tab">
+
+                    <nav class="nav nav-tabs" id="nav-tab" role="tablist">
+                        <a class="nav-link" id="nav-home-tab" data-bs-toggle="tab" href="/admin/users" role="tab"
+                           aria-controls="nav-home" aria-selected="true">Пользователи</a>
+                        <a class="nav-link active" id="nav-profile-tab" data-bs-toggle="tab" href="#nav-profile"
+                           role="tab"
+                           aria-controls="nav-profile" aria-selected="false">Добавить пользователя</a>
+                    </nav>
+                    <div class="tab-content" id="nav-tabContent">
+                        <div class="tab-pane fade show active" id="nav-home" role="tabpanel"
+                             aria-labelledby="nav-home-tab">
+
+                            <div class="card">
+                                <div class="card-header">
+                                    Добавить нового пользователя
+                                </div>
+                                <div class="row">
+
+                                    <div class="col-4"></div>
+                                    <div style="text-align: center;" class="col-3">
+
+
+                                        <form th:method="POST" th:action="save" th:object="${user}">
+
+
+                                            <br><h6><strong>Логин</strong></h6>
+
+
+                                            <input id="username" placeholder="username" type="text"
+                                                   th:field="*{username}"><br>
+                                            <div style="color: red" th:if="${#fields.hasErrors('username')}"
+                                                 th:errors="*{username}">
+                                                Неверное имя пользователя
+                                            </div>
+                                            <br><h6><strong>Пароль</strong></h6>
+
+                                            <input id="password" placeholder="password" type="password"
+                                                   th:field="*{password}"><br>
+                                            <br><h6><strong>Имя</strong></h6>
+                                            <input id="name" placeholder="name" type="text" th:field="*{name}"><br>
+
+                                            <br><h6><strong>Фамилия</strong></h6>
+                                            <input id="lastname" placeholder="lastname" type="text"
+                                                   th:field="*{lastName}" required><br>
+                                            <br><h6><strong>Страна</strong></h6>
+                                            <input id="country" placeholder="country" type="text"
+                                                   th:field="*{country}" required><br>
+                                            <br><h6><strong>Возраст</strong></h6>
+                                            <input id="age" name="age" placeholder="age" type="number"
+                                                   th:field="*{age}" required><br>
+
+                                            <input type="hidden" id="enabled" name="enabled" placeholder="enabled"
+                                                   th:field="*{enabled}" th:value="${user.setEnabled(true)}"><br>
+                                            <label for="add5">Role</label>
+                                            <select multiple class="form-control" size="2" name="roles"
+                                                    id="add5">
+                                                <option value="ADMIN">ADMIN</option>
+                                                <option value="USER">USER</option>
+                                            </select>
+                                            <p>
+                                                <label>Роли:
+
+                                                    <input type="checkbox" name="roles"
+                                                           th:each="role : ${allRoles}"
+                                                           th:text="${role.roleNaming}"
+                                                           th:value="${role.id}"
+                                                           th:field="*{roles}"
+                                                    />
+                                                </label>
+                                            </p>
+                                            <input type="submit" class="btn btn-success" value="Добавить"/>
+                                        </form>
+
+                                    </div>
+                                    <div class="col-5"></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
-    <label for="password">Пароль</label>
-    <input id="password" placeholder="password" type="password" th:field="*{password}"><br>
-    <label for="name">Имя</label>
-    <input id="name" placeholder="name" type="text" th:field="*{name}"><br>
+</div>
 
-    <label for="lastname">Фамилия</label>
-    <input id="lastname" placeholder="lastname" type="text" th:field="*{lastName}" required><br>
-    <label for="country">Страна</label>
-    <input id="country" placeholder="country" type="text" th:field="*{country}" required><br>
-    <label for="age">Возраст</label>
-    <input id="age" name="age" placeholder="age"  type="number" th:field="*{age}" required><br>
+<!--<table class="table table-striped">-->
 
-    <label for="enabled">Активный аккаунт</label>
-    <input id="enabled" name="age" placeholder="enabled"  type="checkbox" th:field="*{enabled}"  th:value="${user.enabled}"><br>
+<!--    <tr>-->
+<!--        <th>Логин</th><th>Имя</th><th>Фамилия</th><th>Страна</th><th>Возраст</th>-->
+<!--    </tr>-->
+<!--    <th:block th:each="user:${user}">-->
+<!--        <tr>-->
+<!--            <td th:text="${user.getUsername()}"></td>-->
+<!--            <td th:text="${user.getName()}"></td>-->
+<!--            <td th:text="${user.getLastName()}"></td>-->
+<!--            <td th:text="${user.getCountry()}"></td>-->
+<!--            <td th:text="${user.getAge()}"></td>-->
 
-    <p>
-        <label>Роли:
-            <input type="checkbox" name="roles"
-                   th:each="role : ${allRoles}"
-                   th:text="${role.roleNaming}"
-                   th:value="${role.id}"
-                   th:field="*{roles}"
-            />
-        </label>
-    </p>
-    <input type="submit" value="Добавить"/>
-</form>
+
+<!--        </tr>-->
+<!--    </th:block>-->
+<!--</table>-->
+
+<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
+        integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
+        crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"
+        integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1"
+        crossorigin="anonymous"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"
+        integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM"
+        crossorigin="anonymous"></script>
 </body>
 </html>
+
+<!--<!DOCTYPE html>-->
+<!--<html lang="en" xmlns="http://www.w3.org/1999/html">-->
+<!--<head>-->
+<!--    <meta charset="UTF-8">-->
+<!--    <title>Добавление пользователя</title>-->
+<!--    <form th:action="@{/logout}" th:method="POST">-->
+<!--        <input type="submit" value="Выйти из аккаунта"/>-->
+<!--    </form>-->
+
+<!--</head>-->
+<!--<body>-->
+<!--<h1>Добавить пользователя</h1>-->
+<!--<h4>Заполните данные</h4>-->
+<!--<form th:method="POST" th:action="save" th:object="${user}">-->
+<!--    <label for="username">Логин</label>-->
+<!--    <input id="username" placeholder="username" type="text" th:field="*{username}"><br>-->
+<!--    <div style="color: red" th:if="${#fields.hasErrors('username')}" th:errors="*{username}">-->
+<!--        Неверное имя пользователя-->
+<!--    </div>-->
+<!--    <label for="password">Пароль</label>-->
+<!--    <input id="password" placeholder="password" type="password" th:field="*{password}"><br>-->
+<!--    <label for="name">Имя</label>-->
+<!--    <input id="name" placeholder="name" type="text" th:field="*{name}"><br>-->
+
+<!--    <label for="lastname">Фамилия</label>-->
+<!--    <input id="lastname" placeholder="lastname" type="text" th:field="*{lastName}" required><br>-->
+<!--    <label for="country">Страна</label>-->
+<!--    <input id="country" placeholder="country" type="text" th:field="*{country}" required><br>-->
+<!--    <label for="age">Возраст</label>-->
+<!--    <input id="age" name="age" placeholder="age"  type="number" th:field="*{age}" required><br>-->
+
+<!--    <label for="enabled">Активный аккаунт</label>-->
+<!--    <input id="enabled" name="age" placeholder="enabled"  type="checkbox" th:field="*{enabled}"  th:value="${user.enabled}"><br>-->
+
+<!--    <p>-->
+<!--        <label>Роли:-->
+<!--            <input type="checkbox" name="roles"-->
+<!--                   th:each="role : ${allRoles}"-->
+<!--                   th:text="${role.roleNaming}"-->
+<!--                   th:value="${role.id}"-->
+<!--                   th:field="*{roles}"-->
+<!--            />-->
+<!--        </label>-->
+<!--    </p>-->
+<!--    <input type="submit" value="Добавить"/>-->
+<!--</form>-->
+<!--</body>-->
+<!--</html>-->

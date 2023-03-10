@@ -29,7 +29,8 @@ public class AdminController {
 
 
     @GetMapping("users")
-    public String showAllUsers(ModelMap model) {
+    public String showAllUsers(ModelMap model, Principal principal) {
+        model.addAttribute("user", userService.findByUsername(principal.getName()));
         if (userService.getAllUsers().isEmpty()) {
             return "zeroPage";
         } else {
@@ -43,7 +44,8 @@ public class AdminController {
     }
 
     @GetMapping("add")
-    public String addUser(ModelMap modelMap) {
+    public String addUser(ModelMap modelMap, Principal principal) {
+        modelMap.addAttribute("masteruser", userService.findByUsername(principal.getName()));
         modelMap.addAttribute("user", new User());
         List<Role> roles = userService.findAll();
         modelMap.addAttribute("allRoles", roles);
