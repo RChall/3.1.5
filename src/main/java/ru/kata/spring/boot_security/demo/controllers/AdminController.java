@@ -45,6 +45,7 @@ public class AdminController {
 
     @GetMapping("add")
     public String addUser(ModelMap modelMap, Principal principal) {
+
         modelMap.addAttribute("masteruser", userService.findByUsername(principal.getName()));
         modelMap.addAttribute("newuser", new User());
         List<Role> roles = userService.findAll();
@@ -54,6 +55,7 @@ public class AdminController {
 
     @PostMapping("save")
     public String saveNewUser(@ModelAttribute("newuser") User user) {
+
         userService.addUser(user);
         return "redirect:";
     }
@@ -61,7 +63,7 @@ public class AdminController {
     @DeleteMapping("delete")
     public String deleteUser(@RequestParam("Id") Long id) {
         userService.deleteUserById(id);
-        return "redirect:users";
+        return "redirect:";
     }
 
     @PostMapping("update")
@@ -77,7 +79,7 @@ public class AdminController {
     @PatchMapping("updating")
     public String updatingUser(@ModelAttribute("user") User user) {
         userService.updateUser(user);
-        return "redirect:users";
+        return "redirect:";
     }
 
     @GetMapping("")
