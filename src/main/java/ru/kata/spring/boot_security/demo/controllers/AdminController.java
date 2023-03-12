@@ -3,14 +3,16 @@ package ru.kata.spring.boot_security.demo.controllers;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
 import org.springframework.ui.ModelMap;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import ru.kata.spring.boot_security.demo.entity.Role;
 import ru.kata.spring.boot_security.demo.entity.User;
 
 import ru.kata.spring.boot_security.demo.service.UserService;
+import ru.kata.spring.boot_security.demo.util.UserValidator;
 
+import javax.validation.Valid;
 import java.security.Principal;
 import java.util.ArrayList;
 import java.util.List;
@@ -22,43 +24,25 @@ public class AdminController {
 
     private final UserService userService;
 
+    private final UserValidator userValidator;
+
     @Autowired
-    public AdminController(UserService userService) {
+    public AdminController(UserService userService, UserValidator userValidator) {
         this.userService = userService;
+        this.userValidator = userValidator;
     }
 
-
-    @GetMapping("users")
-    public String showAllUsers(ModelMap model, Principal principal) {
-        model.addAttribute("user", userService.findByUsername(principal.getName()));
-        if (userService.getAllUsers().isEmpty()) {
-            return "zeroPage";
-        } else {
-            List<User> users = new ArrayList<>();
-            for (User user : userService.getAllUsers()) {
-                users.add(user);
-            }
-            model.addAttribute("users", users);
-            return "UsersView";
-        }
-    }
-
-    @GetMapping("add")
-    public String addUser(ModelMap modelMap, Principal principal) {
-
-        modelMap.addAttribute("masteruser", userService.findByUsername(principal.getName()));
-        modelMap.addAttribute("newuser", new User());
-        List<Role> roles = userService.findAll();
-        modelMap.addAttribute("allRoles", roles);
-        return "addUser";
-    }
 
     @PostMapping("save")
-    public String saveNewUser(@ModelAttribute("newuser") User user) {
+    public String saveNewUser(@ModelAttribute("newuser") @Valid User user, BindingResult bindingResult) {
+        userValidator.validate(user, bindingResult);
+
+        if (bindingResult.hasErrors()) return "admin";
 
         userService.addUser(user);
         return "redirect:";
     }
+
 
     @DeleteMapping("delete")
     public String deleteUser(@RequestParam("Id") Long id) {
@@ -66,15 +50,6 @@ public class AdminController {
         return "redirect:";
     }
 
-    @PostMapping("update")
-    public String updateUser(@RequestParam("editeduser") Long Id, ModelMap model) {
-
-        model.addAttribute("editeduser", userService.getUserById(Id));
-        List<Role> roles = userService.findAll();
-        model.addAttribute("allRoles", roles);
-
-        return "updateUser";
-    }
 
     @PatchMapping("updating")
     public String updatingUser(@ModelAttribute("user") User user) {
@@ -89,26 +64,15 @@ public class AdminController {
         List<Role> roles = userService.findAll();
         model.addAttribute("allRoles", roles);
 
-        if (userService.getAllUsers().isEmpty()) {
-            return "zeroPage";
-        } else {
-            List<User> users = new ArrayList<>();
-            for (User user : userService.getAllUsers()) {
-                users.add(user);
-            }
-            model.addAttribute("users", users);
-            return "admin";
+        List<User> users = new ArrayList<>();
+        for (User user : userService.getAllUsers()) {
+            users.add(user);
         }
+        model.addAttribute("users", users);
+        return "admin";
+
 
     }
 
 
-//    @GetMapping("/admin")
-//    public String showAdminPage(Model model){
-//        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
-//        User user = userService.findByUsername(auth.getName());
-//        model.addAttribute("users",user);
-//        return "admin";
-//
-//    }
 }

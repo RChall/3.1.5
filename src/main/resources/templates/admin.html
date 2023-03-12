@@ -129,14 +129,14 @@
 <!--                                                                                <input type="text" th:value="${user.id}" class="form-control"-->
 <!--                                                                                       id="editUserId" readonly/>-->
 <!--                                                                            </div>-->
-                                                                            <label type="hidden" for="id">Уникальный номер: </label>
-                                                                            <input type="hidden" id = "id" name="Id" th:value="${user.id}" readonly>
+                                                                            <label type="hidden" for="inputid">Уникальный номер: </label>
+                                                                            <input type="hidden" id = "inputid" name="Id" th:value="${user.id}" readonly>
 
                                                                             <div style="font-weight: bold" class="form-group">
                                                                                 <label class="form-label fw-bold"
-                                                                                       for="firstNameInput" >Логин</label>
+                                                                                       for="usernameInput" >Логин</label>
                                                                                 <input type="text" th:name="username"  th:value="${user.username}"
-                                                                                       class="form-control" id="firstNameInput"/>
+                                                                                       class="form-control" id="usernameInput"/>
                                                                             </div>
 
                                                                             <div style="font-weight: bold" class="form-group">
@@ -169,12 +169,12 @@
                                                                                        class="form-control" id="ageInput" />
                                                                             </div>
 
-                                                                            <input type="hidden" id="enabledupdate" name="enabled" placeholder="enabled"
+                                                                            <input type="hidden" name="enabled" placeholder="enabled"
                                                                                    th:field="*{enabled}" th:value="${user.setEnabled(true)}">
 
                                                                             <label style="font-weight: bold" class="control-label
                                                         form-group; col-sm-12" for="roleInputForUpdated">Роли</label>
-                                                                            <select style="padding: 6px; max-width: 46%" name="roles" class="form-select;  col-sm-6" size="2" >
+                                                                            <select multiple style="padding: 6px; max-width: 46%" name="roles" class="form-select;  col-sm-6" size="2" >
                                                                                 <option th:each="role:${allRoles}" th:value="${role.id}"
                                                                                         th:text="${role.roleNaming}" id="roleInputForUpdated"/>
                                                                             </select>
@@ -212,9 +212,9 @@
 
                                                                             <div style="font-weight: bold" class="form-group">
                                                                                 <label class="form-label fw-bold"
-                                                                                       for="firstNameDelete" >Логин</label>
+                                                                                       for="usernameDelete" >Логин</label>
                                                                                 <input disabled type="text" th:name="username"  th:value="${user.username}"
-                                                                                       class="form-control" id="firstNameDelete"/>
+                                                                                       class="form-control" id="usernameDelete"/>
                                                                             </div>
 
                                                                             <div style="font-weight: bold" class="form-group">
@@ -230,13 +230,13 @@
                                                                             </div>
 
                                                                             <div style="font-weight: bold" class="form-group">
-                                                                                <label class="col-sm-12 control-label" for="lastNameInput" >Фамилия</label>
+                                                                                <label class="col-sm-12 control-label" for="lastNameDelete" >Фамилия</label>
                                                                                 <input disabled type="text" th:name="lastName" th:value="${user.lastName}"
                                                                                        class="form-control" id="lastNameDelete" />
                                                                             </div>
 
                                                                             <div style="font-weight: bold" class="form-group">
-                                                                                <label class="col-sm-12  control-label" for="countryInput" >Страна</label>
+                                                                                <label class="col-sm-12  control-label" for="countryDelete" >Страна</label>
                                                                                 <input disabled type="text" th:name="country"  th:value="${user.country}"
                                                                                        class="form-control" id="countryDelete" />
                                                                             </div>
@@ -248,10 +248,10 @@
                                                                             </div>
 
                                                                             <label style="font-weight: bold" class="control-label
-                                                        form-group; col-sm-12" for="roleInputForUpdated">Роли</label>
+                                                        form-group; col-sm-12" for="roleInputForDelete">Роли</label>
                                                                             <select disabled style="padding: 6px; max-width: 46%" name="roles" class="form-select;  col-sm-6" size="2" >
                                                                                 <option th:each="role:${allRoles}" th:value="${role.id}"
-                                                                                        th:text="${role.roleNaming}" id="roleInputForUpdated"/>
+                                                                                        th:text="${role.roleNaming}" id="roleInputForDelete"/>
                                                                             </select>
                                                                             <div class="modal-footer">
                                                                                 <button class="btn btn-secondary" data-dismiss="modal">Отмена</button>
@@ -310,10 +310,9 @@
                                             <br><h6><strong>Логин</strong></h6>
 
 
-                                            <input id="username" placeholder="username" type="text"
-                                                   th:field="*{username}"><br>
-                                            <div style="color: red" th:if="${#fields.hasErrors('username')}"
-                                                 th:errors="*{username}">
+
+                                            <input id="username" placeholder="username" type="text" th:field="*{username}" required><br>
+                                            <div style="color: red" th:if="${#fields.hasErrors('username')}" th:errors="*{username}">
                                                 Неверное имя пользователя
                                             </div>
                                             <br><h6><strong>Пароль</strong></h6>
