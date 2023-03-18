@@ -14,10 +14,8 @@
 </head>
 <body>
 <nav class="navbar navbar-dark fixed-top bg-dark flex-md-nowrap p-0 shadow">
-    <a class="navbar-brand col-sm-3 col-md-2 mr-0" href="#">
-        <td th:text="${user.getUsername()}"></td>
-        , роли:
-        <td th:text="${user.getRoles()}"></td>
+    <a class="navbar-brand col-sm-3 col-md-2 mr-0" href="#" id="navbar-user-info">
+<!--скрипт-->
     </a>
 
     <ul class="navbar-nav px-3">
@@ -71,19 +69,8 @@
                                         <th>Возраст</th>
                                     </tr>
                                     </thead>
-                                    <tbody>
-                                    <th:block th:each="user:${user}">
-                                        <tr>
-                                            <td th:text="${user.getUsername()}"></td>
-                                            <td th:text="${user.getName()}"></td>
-                                            <td th:text="${user.getLastName()}"></td>
-                                            <td th:text="${user.getCountry()}"></td>
-                                            <td th:text="${user.getAge()}"></td>
-
-
-                                        </tr>
-                                    </th:block>
-
+                                    <tbody id="ineligible-user">
+                                    <!--скрипт-->
                                     </tbody>
 
                                 </table>
@@ -114,6 +101,7 @@
 <!--        </tr>-->
 <!--    </th:block>-->
 <!--</table>-->
+<script defer src="/principalUser.js"></script>
 
 <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
         integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"

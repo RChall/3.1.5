@@ -8,11 +8,12 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 
 import javax.persistence.*;
 import java.util.*;
+import java.util.stream.Collectors;
 
 @Table(name = "users")
 @Entity
 public class User implements UserDetails {
-    @ManyToMany(cascade = CascadeType.MERGE)
+    @ManyToMany(cascade = CascadeType.PERSIST)
     @JoinTable(
             name = "users_roles",
             joinColumns = @JoinColumn(name = "user_id", referencedColumnName = "id"),
@@ -109,6 +110,15 @@ public class User implements UserDetails {
     public void setAge(Integer age) {
         this.age = age;
     }
+    public String getRole() {
+        List<String> strRoles = roles.stream().map(Role::toString).collect(Collectors.toList());
+        if (roles.size() == 2) {
+            return strRoles.get(0) + "\n"
+                   + strRoles.get(1);
+        } else {
+            return strRoles.get(0);
+        }
+    }
 
     public List<Role> getRoles() {
         return roles;
@@ -119,8 +129,7 @@ public class User implements UserDetails {
     }
 
     public void setPassword(String password) {
-        PasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
-        this.password = passwordEncoder.encode(password);
+        this.password = password;
     }
 
     public void setRoles(List<Role> roles) {

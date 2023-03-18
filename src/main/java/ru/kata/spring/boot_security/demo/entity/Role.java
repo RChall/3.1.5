@@ -9,8 +9,7 @@ import java.util.List;
 @Entity
 @Table(name = "roles")
 public class Role implements GrantedAuthority {
-    @ManyToMany
-    private List<User> userList;
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
@@ -32,13 +31,7 @@ public class Role implements GrantedAuthority {
         this.id = id;
     }
 
-    public List<User> getUserList() {
-        return userList;
-    }
 
-    public void setUserList(List<User> userList) {
-        this.userList = userList;
-    }
 
 
     public String getRoleNaming() {

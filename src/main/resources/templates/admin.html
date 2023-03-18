@@ -14,10 +14,8 @@
 </head>
 <body>
 <nav class="navbar navbar-dark fixed-top bg-dark flex-md-nowrap p-0 shadow">
-    <a class="navbar-brand col-sm-3 col-md-2 mr-0" href="#">
-        <td th:text="${user.getUsername()}"></td>
-        , роли:
-        <td th:text="${user.getRoles()}"></td>
+    <a class="navbar-brand col-sm-3 col-md-2 mr-0" href="#" id="navbar-user-info">
+        <!--скрипт-->
     </a>
 
     <ul class="navbar-nav px-3">
@@ -95,174 +93,9 @@
                                                 <th>Удалить</th>
 
                                             </tr>
-                                            <th:block th:each="user:${users}">
-                                                <tr>
-                                                    <td th:text="${user.getUsername()}"></td>
-
-                                                    <td th:text="${user.getName()}"></td>
-                                                    <td th:text="${user.getLastName()}"></td>
-                                                    <td th:text="${user.getCountry()}"></td>
-                                                    <td th:text="${user.getAge()}"></td>
-                                                    <td th:text="${user.getRoles()}"></td>
-                                                    <td th:text="${user.getEnabled()}"></td>
-                                                    <td>
-                                                        <input type="submit" class="btn btn-info" data-toggle="modal"
-                                                               th:data-target="${'#editModal' + user.id}" data-target="#editModal"  data-user-id="${user.id}"
-                                                               th:value="Изменить">
-
-                                                        <!--модалка изменение-->
-                                                        <div class="modal fade" th:id="${'editModal' + user.id}" tabindex="-1"
-                                                             aria-hidden="true" aria-labelledby="editModalLabel">
-
-                                                            <div class="modal-dialog">
-                                                                <div class="modal-content">
-                                                                    <div class="modal-header">
-                                                                        <h5 class="modal-title" id="editModalLabel" >Изменение данных пользователя</h5>
-                                                                    </div>
-                                                                    <div class="modal-body">
-                                                                        <form th:method="PATCH" th:object="${user}" th:action="@{/admin/updating}"
-                                                                              class="form-horizontal" role="form" style="text-align: center;
-                                                          display: flex; align-items: center; width: 100%; flex-direction: column ">
-
-                                                                            <label type="hidden" for="inputid">Уникальный номер: </label>
-                                                                            <input type="hidden" id = "inputid" name="Id" th:value="${user.id}" readonly>
-
-                                                                            <div style="font-weight: bold" class="form-group">
-                                                                                <label class="form-label fw-bold"
-                                                                                       for="usernameInput" >Логин</label>
-                                                                                <input type="text" th:name="username"  th:value="${user.username}"
-                                                                                       class="form-control" id="usernameInput"/>
-                                                                            </div>
-
-                                                                            <div style="font-weight: bold" class="form-group">
-                                                                                <label class="col-sm-12 control-label" for="passwordInput" >Пароль</label>
-                                                                                <input type="password" th:name="password" th:value="${user.password}"
-                                                                                       class="form-control" id="passwordInput" />
-                                                                            </div>
-
-                                                                            <div style="font-weight: bold" class="form-group">
-                                                                                <label class="col-sm-12 control-label" for="nameInput" >Имя</label>
-                                                                                <input type="text" th:name="name" th:value="${user.name}"
-                                                                                       class="form-control" id="nameInput" />
-                                                                            </div>
-
-                                                                            <div style="font-weight: bold" class="form-group">
-                                                                                <label class="col-sm-12 control-label" for="lastNameInput" >Фамилия</label>
-                                                                                <input type="text" th:name="lastName" th:value="${user.lastName}"
-                                                                                       class="form-control" id="lastNameInput" />
-                                                                            </div>
-
-                                                                            <div style="font-weight: bold" class="form-group">
-                                                                                <label class="col-sm-12  control-label" for="countryInput" >Страна</label>
-                                                                                <input type="text" th:name="country"  th:value="${user.country}"
-                                                                                       class="form-control" id="countryInput" />
-                                                                            </div>
-
-                                                                            <div style="font-weight: bold" class="form-group">
-                                                                                <label class="col-sm-12  control-label" for="ageInput" >Возраст</label>
-                                                                                <input type="number" th:name="age"  th:value="${user.age}"
-                                                                                       class="form-control" id="ageInput" />
-                                                                            </div>
-
-                                                                            <input type="hidden" name="enabled" placeholder="enabled"
-                                                                                   th:field="*{enabled}" th:value="${user.setEnabled(true)}">
-
-                                                                            <label style="font-weight: bold" class="control-label
-                                                        form-group; col-sm-12" for="roleInputForUpdated">Роли</label>
-                                                                            <select multiple style="padding: 6px; max-width: 46%" name="roles" class="form-select;  col-sm-6" size="2" >
-                                                                                <option th:each="role:${allRoles}" th:value="${role.id}"
-                                                                                        th:text="${role.roleNaming}" id="roleInputForUpdated"/>
-                                                                            </select>
-                                                                            <div class="modal-footer">
-                                                                                <button class="btn btn-secondary" data-dismiss="modal">Отмена</button>
-                                                                                <button  class="btn btn-info" >Применить</button>
-                                                                            </div>
-                                                                        </form>
-                                                                    </div>
-
-                                                                </div>
-                                                            </div>
-                                                        </div>
-
-                                                    </td>
-                                                    <td>
-                                                        <input type="submit" class="btn btn-danger" data-toggle="modal"
-                                                               th:data-target="${'#deleteModal' + user.id}" data-target="#deleteModal"  data-user-id="${user.id}"
-                                                               th:value="Удалить">
-
-                                                        <!--модалка удаление-->
-
-                                                        <div class="modal fade" th:id="${'deleteModal' + user.id}" tabindex="-1"
-                                                             aria-hidden="true" aria-labelledby="deleteModalLabel">
-
-                                                            <div class="modal-dialog">
-                                                                <div class="modal-content">
-                                                                    <div class="modal-header">
-                                                                        <h5 class="modal-title" id="deleteModalLabel" >Удалить пользователя?</h5>
-                                                                    </div>
-                                                                    <div class="modal-body">
-                                                                        <form th:method="DELETE"  th:action="@{/admin/delete}"  th:object="${user}"
-                                                                              class="form-horizontal" role="form" style="text-align: center;
-                                                          display: flex; align-items: center; width: 100%; flex-direction: column ">
-
-                                                                            <div style="font-weight: bold" class="form-group">
-                                                                                <label class="form-label fw-bold"
-                                                                                       for="usernameDelete" >Логин</label>
-                                                                                <input disabled type="text" th:name="username"  th:value="${user.username}"
-                                                                                       class="form-control" id="usernameDelete"/>
-                                                                            </div>
-
-                                                                            <div style="font-weight: bold" class="form-group">
-                                                                                <label class="col-sm-12 control-label" for="passwordDelete" >Пароль</label>
-                                                                                <input disabled type="password" th:name="password" th:value="${user.password}"
-                                                                                       class="form-control" id="passwordDelete" />
-                                                                            </div>
-
-                                                                            <div style="font-weight: bold" class="form-group">
-                                                                                <label class="col-sm-12 control-label" for="nameDelete" >Имя</label>
-                                                                                <input disabled type="text" th:name="name" th:value="${user.name}"
-                                                                                       class="form-control" id="nameDelete" />
-                                                                            </div>
-
-                                                                            <div style="font-weight: bold" class="form-group">
-                                                                                <label class="col-sm-12 control-label" for="lastNameDelete" >Фамилия</label>
-                                                                                <input disabled type="text" th:name="lastName" th:value="${user.lastName}"
-                                                                                       class="form-control" id="lastNameDelete" />
-                                                                            </div>
-
-                                                                            <div style="font-weight: bold" class="form-group">
-                                                                                <label class="col-sm-12  control-label" for="countryDelete" >Страна</label>
-                                                                                <input disabled type="text" th:name="country"  th:value="${user.country}"
-                                                                                       class="form-control" id="countryDelete" />
-                                                                            </div>
-
-                                                                            <div style="font-weight: bold" class="form-group">
-                                                                                <label class="col-sm-12  control-label" for="ageDelete" >Возраст</label>
-                                                                                <input disabled type="number" th:name="age"  th:value="${user.age}"
-                                                                                       class="form-control" id="ageDelete" />
-                                                                            </div>
-
-                                                                            <label style="font-weight: bold" class="control-label
-                                                        form-group; col-sm-12" for="roleInputForDelete">Роли</label>
-                                                                            <select disabled style="padding: 6px; max-width: 46%" name="roles" class="form-select;  col-sm-6" size="2" >
-                                                                                <option th:each="role:${allRoles}" th:value="${role.id}"
-                                                                                        th:text="${role.roleNaming}" id="roleInputForDelete"/>
-                                                                            </select>
-                                                                            <div class="modal-footer">
-                                                                                <button class="btn btn-secondary" data-dismiss="modal">Отмена</button>
-                                                                                <button name="Id" class="btn btn-danger"
-                                                                                        th:value="${user.getId()}">Удалить
-                                                                                </button>
-                                                                            </div>
-                                                                        </form>
-                                                                    </div>
-                                                                </div>
-                                                            </div>
-                                                        </div>
-
-                                                    </td>
-                                                </tr>
-                                            </th:block>
+                                            <tbody id="main-users-table">
+                                            <!--Пожалуйста, тут должен быть скрипт-->
+                                            </tbody>
                                         </table>
 
 
@@ -276,52 +109,71 @@
                                 <div class="card-header">
                                     Добавить нового пользователя
                                 </div>
-                                <div class="row">
+                                <div class="row" id="adding-user-field">
 
                                     <div class="col-4"></div>
                                     <div style="text-align: center;" class="col-3">
 
-
-                                        <form th:method="POST" th:action="@{/admin/save}" th:object="${newuser}">
-
-
-                                            <br><h6><strong>Логин</strong></h6>
+                                        <form class="form-horizontal" role="form"  id="add-new-user-form">
 
 
 
-                                            <input id="username" placeholder="username" type="text" th:field="*{username}" required><br>
-                                            <div style="color: red" th:if="${#fields.hasErrors('username')}" th:errors="*{username}">
-                                                Неверное имя пользователя
+                                            <div style="font-weight: bold" class="form-group">
+                                                <label class="col-sm-12  control-label">Логин</label>
+                                                <div class="col-sm-12 ">
+                                                    <input type="text" class="form-control" id="usernameSave" name="username"/>
+                                                </div>
                                             </div>
-                                            <br><h6><strong>Пароль</strong></h6>
 
-                                            <input id="password" placeholder="password" type="password"
-                                                   th:field="*{password}"><br>
-                                            <br><h6><strong>Имя</strong></h6>
-                                            <input id="name" placeholder="name" type="text" th:field="*{name}"><br>
+                                            <div style="font-weight: bold" class="form-group">
+                                                <label class="col-sm-12 control-label">Пароль</label>
+                                                <div class="col-sm-12">
+                                                    <input type="password" class="form-control" id="passwordSave"
+                                                           name="password"/>
+                                                </div>
+                                            </div>
 
-                                            <br><h6><strong>Фамилия</strong></h6>
-                                            <input id="lastname" placeholder="lastname" type="text"
-                                                   th:field="*{lastName}" required><br>
-                                            <br><h6><strong>Страна</strong></h6>
-                                            <input id="country" placeholder="country" type="text"
-                                                   th:field="*{country}" required><br>
-                                            <br><h6><strong>Возраст</strong></h6>
-                                            <input id="age" name="age" placeholder="age" type="number"
-                                                   th:field="*{age}" required><br>
+                                            <div style="font-weight: bold" class="form-group">
+                                                <label class="col-sm-12  control-label">Имя</label>
+                                                <div class="col-sm-12">
+                                                    <input type="text" id="nameSave" name="name" class="form-control"/>
+                                                </div>
+                                            </div>
 
-                                            <input type="hidden" id="enabled" name="enabled" placeholder="enabled"
-                                                   th:field="*{enabled}" th:value="${newuser.setEnabled(true)}"><br>
+                                            <div style="font-weight: bold" class="form-group">
+                                                <label class="col-sm-12  control-label">Фамилия</label>
+                                                <div class="col-sm-12">
+                                                    <input type="text" id="lastnameSave" name="lastname" class="form-control"/>
+                                                </div>
+                                            </div>
+
+                                            <div style="font-weight: bold" class="form-group">
+                                                <label class="col-sm-12  control-label">Страна</label>
+                                                <div class="col-sm-12">
+                                                    <input type="text" id="countrySave" name="country" class="form-control"/>
+                                                </div>
+                                            </div>
+
+                                            <div style="font-weight: bold" class="form-group">
+                                                <label class="col-sm-12  control-label">Возраст</label>
+                                                <div class="col-sm-12">
+                                                    <input type="number" id="ageSave" name="age" class="form-control"/>
+                                                </div>
+                                            </div>
 
 
-                                            <label style="font-weight: bold" class="control-label
-                                             form-group; col-sm-12" for="roleSelect">Роли</label>
-                                            <select multiple name="roles" class="form-select; col-sm-6" size="2">
-                                                <option style="padding: 6px; max-width: 100%" th:each="role:${allRoles}" th:value="${role.id}"
-                                                        th:text="${role.roleNaming}" id="roleSelect" readonly/>
-                                            </select><br>
+                                            <label style="font-weight: bold" class="control-label">Роли</label>
+                                            <div style="font-weight: bold" class="form-group">
+                                                <select class="form-control;  col-sm-12" size="2" multiple aria-label="Роли"
+                                                        id="add-new-roleSelect" name="roles">
+                                                    <!--oknooptoin-->
+                                                </select>
+                                            </div>
 
-                                            <input type="submit" class="btn btn-success" value="Добавить"/><br>
+
+                                                <input class="btn btn-success" type="submit" id="saveButton"
+                                                       data-user-save="saveUser" value="Добавить"/>
+
                                         </form>
 
                                     </div>
@@ -362,19 +214,8 @@
                                         <th>Возраст</th>
                                     </tr>
                                     </thead>
-                                    <tbody>
-                                    <th:block th:each="user:${user}">
-                                        <tr>
-                                            <td th:text="${user.getUsername()}"></td>
-                                            <td th:text="${user.getName()}"></td>
-                                            <td th:text="${user.getLastName()}"></td>
-                                            <td th:text="${user.getCountry()}"></td>
-                                            <td th:text="${user.getAge()}"></td>
-
-
-                                        </tr>
-                                    </th:block>
-
+                                    <tbody id="ineligible-user">
+                                    <!--скрипт-->
                                     </tbody>
 
                                 </table>
@@ -385,12 +226,157 @@
                 </div>
 
 
-
             </div>
         </div>
     </div>
 </div>
 
+<!--модалка изменение-->
+<div class="modal fade" id="editModal" tabindex="-1"
+     aria-hidden="true" aria-labelledby="editModalLabel">
+
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="editModalLabel" >Изменение данных пользователя</h5>
+            </div>
+            <div class="modal-body">
+                <form  id="edit-form-modal"
+                      class="form-horizontal" role="form" style="text-align: center;
+                                                          display: flex; align-items: center; width: 100%; flex-direction: column ">
+
+
+                    <input type="hidden"  name="id"  readonly>
+                    <input type="hidden" name="enabled" placeholder="enabled">
+
+                    <div style="font-weight: bold" class="form-group">
+                        <label class="form-label fw-bold"
+                               for="usernameInput" >Логин</label>
+                        <input type="text" name="username"
+                               class="form-control" id="usernameInput"/>
+                    </div>
+
+                    <div style="font-weight: bold" class="form-group">
+                        <label class="col-sm-12 control-label" for="passwordInput" >Пароль</label>
+                        <input type="password" name="password"
+                               class="form-control" id="passwordInput" />
+                    </div>
+
+                    <div style="font-weight: bold" class="form-group">
+                        <label class="col-sm-12 control-label" for="nameInput" >Имя</label>
+                        <input type="text" name="name"
+                               class="form-control" id="nameInput" />
+                    </div>
+
+                    <div style="font-weight: bold" class="form-group">
+                        <label class="col-sm-12 control-label" for="lastNameInput" >Фамилия</label>
+                        <input type="text" name="lastName"
+                               class="form-control" id="lastNameInput" />
+                    </div>
+
+                    <div style="font-weight: bold" class="form-group">
+                        <label class="col-sm-12  control-label" for="countryInput" >Страна</label>
+                        <input type="text" name="country"
+                               class="form-control" id="countryInput" />
+                    </div>
+
+                    <div style="font-weight: bold" class="form-group">
+                        <label class="col-sm-12  control-label" for="ageInput" >Возраст</label>
+                        <input type="number" name="age"
+                               class="form-control" id="ageInput" />
+                    </div>
+
+
+
+                    <label style="font-weight: bold" class="control-label
+                                                        form-group; col-sm-12" for="roleInputForUpdated">Роли</label>
+                    <select id="roleInputForUpdated" multiple style="padding: 6px; max-width: 46%" name="roles" class="form-select  col-sm-6" size="2" >
+
+                    </select>
+                    <div class="modal-footer">
+                        <button id="close-edit-modal" class="btn btn-secondary" data-dismiss="modal">Отмена</button>
+                        <button  class="btn btn-info" >Применить</button>
+                    </div>
+                </form>
+            </div>
+
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" id="deleteModal" tabindex="-1"
+     aria-hidden="true" aria-labelledby="deleteModalLabel">
+
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="deleteModalLabel" >Удалить пользователя?</h5>
+            </div>
+            <div class="modal-body">
+                <form id="delete-form-modal"
+                      class="form-horizontal" role="form" style="text-align: center;
+                                                          display: flex; align-items: center; width: 100%; flex-direction: column ">
+                    <input type="hidden"  name="id" />
+
+                    <div style="font-weight: bold" class="form-group">
+                        <label class="form-label fw-bold"
+                               for="usernameDelete" >Логин</label>
+                        <input disabled type="text" name="username" class="form-control" id="usernameDelete"/>
+                    </div>
+
+                    <div style="font-weight: bold" class="form-group">
+                        <label class="col-sm-12 control-label" for="passwordDelete" >Пароль</label>
+                        <input disabled type="password" name="password"
+                               class="form-control" id="passwordDelete" />
+                    </div>
+
+                    <div style="font-weight: bold" class="form-group">
+                        <label class="col-sm-12 control-label" for="nameDelete" >Имя</label>
+                        <input disabled type="text" name="name"
+                               class="form-control" id="nameDelete" />
+                    </div>
+
+                    <div style="font-weight: bold" class="form-group">
+                        <label class="col-sm-12 control-label" for="lastNameDelete" >Фамилия</label>
+                        <input disabled type="text" name="lastName"
+                               class="form-control" id="lastNameDelete" />
+                    </div>
+
+                    <div style="font-weight: bold" class="form-group">
+                        <label class="col-sm-12  control-label" for="countryDelete" >Страна</label>
+                        <input disabled type="text" name="country"
+                               class="form-control" id="countryDelete" />
+                    </div>
+
+                    <div style="font-weight: bold" class="form-group">
+                        <label class="col-sm-12  control-label" for="ageDelete" >Возраст</label>
+                        <input disabled type="number" name="age"
+                               class="form-control" id="ageDelete" />
+                    </div>
+
+                    <label style="font-weight: bold" class="control-label
+                                                        form-group; col-sm-12" for="roleInputForDelete">Роли</label>
+                    <select disabled style="padding: 6px; max-width: 46%" id="roleInputForDelete" name="roles"
+                            class="form-select;  col-sm-6" size="2" >
+
+
+                    </select>
+                    <div class="modal-footer">
+                        <button class="btn btn-secondary" id="cancel-to-delete-modal" data-dismiss="modal">Отмена</button>
+                        <button name="Id" class="btn btn-danger" id="delete-modal-button">Удалить</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<script defer src="/allUsers.js"></script>
+<script defer src="/principalUser.js"></script>
+<script defer src="/addUser.js"></script>
+<script defer src="/deleteUser.js"></script>
+<script defer src="/editUser.js"></script>
 
 <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
         integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"

@@ -13,7 +13,7 @@
 <body>
 <div class="container">
     <form class="form-signin" method="post" action="/process_login">
-        <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}" />
+<!--        <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}" />-->
         <h2 class="form-signin-heading">Пожалуйста войдите</h2>
         <p>
             <label for="username" class="sr-only">Username</label>
@@ -28,9 +28,9 @@
 
         <button class="btn btn-lg btn-primary btn-block" type="submit">Войти</button>
         <div th:if="${param.error}" style="color: red">
-            Неверные имя лол пользователя или пароль
+            Неверные имя пользователя или пароль
         </div>
-        <a href="/auth/registration">Еще не зарегестрированы? Зарегестрируйтесь!</a>
+<!--        <a href="/auth/registration">Еще не зарегестрированы? Зарегестрируйтесь!</a>-->
     </form>
 </div>
 </body>

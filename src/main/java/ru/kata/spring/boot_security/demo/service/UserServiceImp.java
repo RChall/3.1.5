@@ -6,6 +6,8 @@ import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -37,8 +39,10 @@ public class UserServiceImp implements UserService {
 
     @Transactional
     @Override
-    public void addUser(User user) {
-        userRepository.save(user);
+    public <S extends User> User addUser(User user) {
+        PasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
+        user.setPassword(passwordEncoder.encode(user.getPassword()));
+       return userRepository.save(user);
     }
 
     @Override
@@ -48,7 +52,7 @@ public class UserServiceImp implements UserService {
 
     @Override
     public User getUserById(Long id) {
-        return userRepository.getById(id);
+        return userRepository.findById(id).get();
     }
 
     @Transactional
@@ -61,6 +65,10 @@ public class UserServiceImp implements UserService {
     @Override
     @Transactional
     public void updateUser(User user) {
+        PasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
+        if (!user.getPassword().equals(getUserById(user.getId()).getPassword())){
+            user.setPassword(passwordEncoder.encode(user.getPassword()));
+        }
         userRepository.save(user);
     }
 
